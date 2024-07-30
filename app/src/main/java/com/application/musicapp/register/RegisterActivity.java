@@ -2,18 +2,13 @@ package com.application.musicapp.register;
 
 import android.os.Bundle;
 
-import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 import com.application.musicapp.R;
-import com.application.musicapp.basic.BaseActivity;
-import com.application.musicapp.register.forms.RegistrationFragment;
+import com.application.musicapp.register.forms.FullNameFragment;
 
 public class RegisterActivity extends AppCompatActivity {
 
@@ -23,7 +18,7 @@ public class RegisterActivity extends AppCompatActivity {
         setContentView(R.layout.activity_register);
 
         if (savedInstanceState == null) {
-            loadFragment(new RegistrationFragment());
+            loadFragment(new FullNameFragment());
         }
 
     }

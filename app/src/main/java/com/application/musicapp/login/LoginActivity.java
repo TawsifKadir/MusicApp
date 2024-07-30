@@ -2,9 +2,9 @@ package com.application.musicapp.login;
 
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.Button;
-import android.widget.EditText;
 
 import androidx.lifecycle.ViewModelProvider;
 
@@ -14,18 +14,24 @@ import com.application.musicapp.basic.BaseActivity;
 import com.application.musicapp.register.RegisterActivity;
 import com.application.musicapp.utils.FireBaseHelper;
 import com.application.musicapp.utils.PrefHelper;
+import com.google.android.material.textfield.TextInputEditText;
+import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.auth.FirebaseUser;
 
 public class LoginActivity extends BaseActivity {
     private final static String TAG = "LoginActivity";
-    private EditText tvUserName;
-    private EditText tvPassword;
+    private TextInputEditText tvUserName;
+    private TextInputEditText tvPassword;
+    private TextInputLayout tlUserName;
     private Button btSubmit;
-    private Button btRegister;
+    private TextView btRegister;
+    private TextView btCredChange;
+    private TextView btResetPass;
     private LoginViewModel viewModel;
     private PrefHelper prefHelper;
     private FireBaseHelper fireBaseHelper;
+    private Boolean isEmail;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,6 +57,7 @@ public class LoginActivity extends BaseActivity {
         fireBaseHelper = new FireBaseHelper();
         viewModel = new ViewModelProvider(this).get(LoginViewModel.class);
         prefHelper = new PrefHelper(this);
+        isEmail = true;
     }
 
     @Override
@@ -70,14 +77,35 @@ public class LoginActivity extends BaseActivity {
         btRegister.setOnClickListener(v->{
             navigateToRegisterActivity();
         });
+
+        btCredChange.setOnClickListener(v->{
+            if (isEmail){
+                isEmail = false;
+                clearUi();
+                tlUserName.setHint(R.string.phone_number);
+                btCredChange.setText(R.string.use_email);
+            }else{
+                isEmail = true;
+                clearUi();
+                tlUserName.setHint(R.string.email);
+                btCredChange.setText(R.string.use_phone_number);
+            }
+        });
+
+        btResetPass.setOnClickListener(v->{
+
+        });
     }
 
     @Override
     public void initViews() {
         btSubmit = findViewById(R.id.btSubmit);
         btRegister = findViewById(R.id.btRegister);
+        btCredChange = findViewById(R.id.credTypeChange);
+        btResetPass = findViewById(R.id.resetPass);
         tvUserName = findViewById(R.id.userName);
         tvPassword = findViewById(R.id.password);
+        tlUserName = findViewById(R.id.userNameLayout);
     }
 
     @Override
@@ -112,5 +140,10 @@ public class LoginActivity extends BaseActivity {
 
     private void navigateToRegisterActivity(){
         navigateToActivity(RegisterActivity.class);
+    }
+
+    private void clearUi(){
+        tvUserName.setText("");
+        tvPassword.setText("");
     }
 }

@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- EditText Styles -->
+    <style name="MyEditTextLineStyle" parent="Widget.MaterialComponents.TextInputLayout.FilledBox">
+        <item name="boxBackgroundColor">@color/colorBackground</item>
+        <item name="boxStrokeColor">@color/editTextBorder</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginBottom">@dimen/content_padding</item>
+        <item name="boxStrokeWidth">1dp</item>
+        <item name="boxCornerRadiusTopStart">0dp</item>
+        <item name="boxCornerRadiusTopEnd">0dp</item>
+        <item name="boxCornerRadiusBottomStart">0dp</item>
+        <item name="boxCornerRadiusBottomEnd">0dp</item>
+        <item name="android:textColor">@android:color/black</item>
+    </style>
+
+    <style name="MyEditTextBorderStyle" parent="Widget.MaterialComponents.TextInputLayout.FilledBox">
+        <item name="boxBackgroundColor">@color/colorBackground</item>
+        <item name="boxStrokeColor">@color/editTextBorder</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginBottom">@dimen/content_padding</item>
+        <item name="boxStrokeWidth">2dp</item>
+        <item name="boxCornerRadiusTopStart">@dimen/ccr_default</item>
+        <item name="boxCornerRadiusTopEnd">@dimen/ccr_default</item>
+        <item name="boxCornerRadiusBottomStart">@dimen/ccr_default</item>
+        <item name="boxCornerRadiusBottomEnd">@dimen/ccr_default</item>
+        <item name="android:textColor">@android:color/black</item>
+    </style>
+
+    <!-- Button Style -->
+    <style name="MyButtonStyle" parent="Widget.MaterialComponents.Button">
+        <item name="cornerRadius">@dimen/ccr_default</item>
+        <item name="android:layout_width">@dimen/button_width_half</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginTop">@dimen/content_padding</item>
+        <item name="android:layout_marginBottom">@dimen/content_padding</item>
+        <item name="backgroundTint">@color/buttonColor</item>
+        <item name="android:textColor">@android:color/white</item>
+        <item name="android:padding">@dimen/button_padding</item>
+    </style>
+
+    <!-- Register Button Style -->
+    <style name="MyAnchorTextStyle" parent="TextAppearance.MaterialComponents.Button">
+        <item name="android:textColor">@color/colorAccent</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginTop">@dimen/content_padding_small</item>
+        <item name="android:layout_marginBottom">@dimen/content_padding_small</item>
+        <item name="android:textSize">@dimen/text_size_small_1</item>
+        <item name="fontFamily">@font/roboto_medium</item>
+    </style>
+
+    <!-- Password EditText Style -->
+    <style name="MyPasswordEditTextStyle" parent="Widget.MaterialComponents.TextInputLayout.FilledBox">
+        <item name="boxBackgroundColor">@color/colorBackground</item>
+        <item name="boxStrokeColor">@color/editTextBorder</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginBottom">@dimen/content_padding</item>
+        <item name="boxStrokeWidth">1dp</item>
+        <item name="boxCornerRadiusTopStart">0dp</item>
+        <item name="boxCornerRadiusTopEnd">0dp</item>
+        <item name="boxCornerRadiusBottomStart">0dp</item>
+        <item name="boxCornerRadiusBottomEnd">0dp</item>
+        <item name="android:textColor">@android:color/black</item>
+        <item name="endIconMode">password_toggle</item>
+    </style>
+
+    <!-- Title Text Style -->
+    <style name="TitleTextStyle" parent="TextAppearance.AppCompat.Large">
+        <item name="android:textSize">@dimen/text_size_xl_3</item>
+        <item name="android:textColor">@color/black</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:layout_marginBottom">@dimen/content_padding_small</item>
+        <item name="android:layout_marginTop">@dimen/margin_top</item>
+    </style>
+</resources>

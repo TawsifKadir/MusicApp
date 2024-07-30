@@ -20,7 +20,7 @@ import com.application.musicapp.register.RegisterViewModel;
 import com.application.musicapp.utils.FireBaseHelper;
 import com.google.firebase.auth.FirebaseAuth;
 
-public class RegistrationFragment extends BaseFragment {
+public class FullNameFragment extends BaseFragment {
 
     private RegisterViewModel viewModel;
     private FirebaseAuth mAuth;
@@ -34,7 +34,7 @@ public class RegistrationFragment extends BaseFragment {
     private EditText phoneNumberEditText;
     private Button registerButton;
 
-    public RegistrationFragment() {
+    public FullNameFragment() {
         // Required empty public constructor
     }
 
@@ -42,7 +42,7 @@ public class RegistrationFragment extends BaseFragment {
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_registration, container, false);
+        View view = inflater.inflate(R.layout.fragment_full_name, container, false);
         initInitial();
         setupViews(view);
         initObservers();
@@ -51,7 +51,7 @@ public class RegistrationFragment extends BaseFragment {
 
     @Override
     protected int getLayoutResourceId() {
-        return R.layout.fragment_registration;
+        return R.layout.fragment_full_name;
     }
 
     @Override

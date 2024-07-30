@@ -1,54 +1,104 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity">
+    android:orientation="vertical"
+    android:padding="@dimen/content_padding"
+    android:background="@color/colorBackground">
 
-    <EditText
-        android:id="@+id/userName"
-        android:layout_width="226dp"
-        android:layout_height="37dp"
-        android:hint="Username"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
+    <TextView
+        android:id="@+id/titleText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/login"
+        style="@style/TitleTextStyle"
+        android:layout_gravity="center_horizontal"/>
+
+    <!-- EditText with Line Style -->
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/userNameLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/email"
+        style="@style/MyEditTextLineStyle">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/userName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <!-- Anchor Text below Username -->
+    <TextView
+        android:id="@+id/credTypeChange"
+        android:text="@string/use_phone_number"
+        app:layout_constraintTop_toBottomOf="@id/userNameLayout"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        style="@style/MyAnchorTextStyle"
+        android:clickable="true"
+        android:focusable="true"/>
 
-    <EditText
-        android:id="@+id/password"
-        android:layout_width="221dp"
-        android:layout_height="43dp"
-        android:hint="Password"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.515"
+
+    <!-- EditText with Border Style -->
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/passwordLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/credTypeChange"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.577" />
+        app:layout_constraintEnd_toEndOf="parent"
+        style="@style/MyPasswordEditTextStyle">
 
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/password"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/password"
+            android:inputType="textPassword"/>
+
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <!-- Submit Button -->
     <Button
         android:id="@+id/btSubmit"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="200dp"
-        android:text="Submit"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.308"
-        app:layout_constraintStart_toStartOf="parent" />
+        android:text="@string/login"
+        style="@style/MyButtonStyle"/>
 
-    <Button
-        android:id="@+id/btRegister"
-        android:layout_width="wrap_content"
+    <!-- Register Text Acting as a Button -->
+    <!-- Anchor Tags -->
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="200dp"
-        android:text="Register"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.669"
-        app:layout_constraintStart_toStartOf="parent" />
+        android:orientation="horizontal"
+        android:layout_gravity="bottom">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <!-- Left Anchor -->
+        <TextView
+            android:id="@+id/btRegister"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/register"
+            style="@style/MyAnchorTextStyle"
+            android:gravity="start"
+            android:clickable="true"
+            android:focusable="true"/>
+
+        <!-- Right Anchor -->
+        <TextView
+            android:id="@+id/resetPass"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/forgot_password"
+            style="@style/MyAnchorTextStyle"
+            android:gravity="end"
+            android:clickable="true"
+            android:focusable="true"/>
+    </LinearLayout>
+
+</LinearLayout>

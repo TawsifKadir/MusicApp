@@ -1,5 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="black">#FF000000</color>
-    <color name="white">#FFFFFFFF</color>
+    <color name="colorPrimaryVariant">#3700B3</color> <!-- Darker Blue -->
+    <color name="colorOnPrimary">#FFFFFF</color> <!-- White for text on primary color -->
+
+    <color name="colorSecondary">#03DAC5</color> <!-- Teal -->
+    <color name="colorSecondaryVariant">#018786</color> <!-- Darker Teal -->
+    <color name="colorOnSecondary">#000000</color> <!-- Black for text on secondary color -->
+
+    <color name="appBackgroundColor">#FFFFFF</color> <!-- White background -->
+    <color name="colorOnBackground">#000000</color> <!-- Black text on background -->
+
+    <color name="colorSurface">#FFFFFF</color> <!-- White surface -->
+    <color name="colorOnSurface">#000000</color> <!-- Black text on surface -->
+
+    <color name="windowBackground">#FFFFFF</color> <!-- White window background -->
+
+    <color name="colorPrimary">#2196F3</color>
+    <color name="colorPrimaryDark">#1976D2</color>
+    <color name="colorAccent">#6fccd9</color>
+    <color name="colorBackground">#F5F5F5</color>
+    <color name="editTextBorder">#BDBDBD</color>
+    <color name="buttonColor">#2196F3</color>
+
+    <!-- Additional colors for buttons -->
+    <color name="lightBlue">#03A9F4</color>
+    <color name="black">#000000</color>
+    <color name="green">#4CAF50</color>
+    <color name="white">#FFFFFF</color>
+    <color name="blue">#6fccd9</color>
 </resources>

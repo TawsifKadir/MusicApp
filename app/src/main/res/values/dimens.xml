@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Text Sizes -->
+    <dimen name="text_size_normal">14sp</dimen>
+    <dimen name="text_size_list_title">16sp</dimen>
+    <dimen name="text_size_input_header">12sp</dimen>
+    <dimen name="text_size_report_header">14sp</dimen>
+    <dimen name="text_size_report_body">12sp</dimen>
+    <dimen name="text_size_table_header">10sp</dimen>
+
+    <dimen name="text_size_small_1">12sp</dimen>
+    <dimen name="text_size_small_2">14sp</dimen>
+    <dimen name="text_size_medium_1">16sp</dimen>
+    <dimen name="text_size_medium_2">18sp</dimen>
+    <dimen name="text_size_large_1">20sp</dimen>
+    <dimen name="text_size_large_2">22sp</dimen>
+    <dimen name="text_size_large_3">26sp</dimen>
+    <dimen name="text_size_xl_1">30sp</dimen>
+    <dimen name="text_size_xl_2">36sp</dimen>
+    <dimen name="text_size_xl_3">40sp</dimen>
+
+    <!-- App Specific Dimensions -->
+    <dimen name="ss_app_logo">40dp</dimen>
+    <dimen name="ss_app_title">20sp</dimen>
+    <dimen name="ss_app_version">18sp</dimen>
+
+    <!-- Corner Radii -->
+    <dimen name="ccr_default">16dp</dimen>
+    <dimen name="scr_input_box">4dp</dimen>
+
+    <!-- Button Sizes and Padding -->
+    <dimen name="button_padding">16dp</dimen>
+    <dimen name="button_width">90%</dimen>
+    <dimen name="button_width_half">50%</dimen>
+
+    <!-- Input Row Dimensions -->
+    <dimen name="input_row_height">40dp</dimen>
+    <dimen name="content_padding">16dp</dimen>
+    <dimen name="content_padding_medium">8dp</dimen>
+    <dimen name="content_padding_small">4dp</dimen>
+
+    <dimen name="margin_top">60dp</dimen>
+
+    <dimen name="edit_text_height">48dp</dimen> <!-- Adjust this value as needed -->
+</resources>
