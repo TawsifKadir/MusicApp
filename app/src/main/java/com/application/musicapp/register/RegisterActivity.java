@@ -7,35 +7,31 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
 import com.application.musicapp.R;
 import com.application.musicapp.basic.BaseActivity;
+import com.application.musicapp.register.forms.RegistrationFragment;
 
-public class RegisterActivity extends BaseActivity {
+public class RegisterActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
-    }
 
-    @Override
-    public void initInitial() {
-
-    }
-
-    @Override
-    public void initViews() {
+        if (savedInstanceState == null) {
+            loadFragment(new RegistrationFragment());
+        }
 
     }
 
-    @Override
-    public void initObservers() {
-
-    }
-
-    @Override
-    public void onNext() {
-
+    private void loadFragment(Fragment fragment) {
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        fragmentTransaction.replace(R.id.fragment_container, fragment);
+        fragmentTransaction.commit();
     }
 }
