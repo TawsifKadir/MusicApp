@@ -25,6 +25,8 @@ import com.application.musicapp.utils.FireBaseHelper;
 
 public class RegisterActivity extends BaseActivity implements RegistrationFragmentChangeListener{
 
+    private static final int NO_OF_PAGES = 5;
+
     private RegisterViewModel viewModel;
     private FireBaseHelper fireBaseHelper;
     private String username;
@@ -105,7 +107,7 @@ public class RegisterActivity extends BaseActivity implements RegistrationFragme
 
     public void setToolbarTitle(int page_no) {
         TextView toolbarSubtitle = findViewById(R.id.toolbarSubtitle);
-        @SuppressLint("DefaultLocale") String title = String.format("Step %d of 5",page_no);
+        @SuppressLint("DefaultLocale") String title = String.format("Step %d of %d",page_no,NO_OF_PAGES);
         toolbarSubtitle.setText(title);
     }
 
