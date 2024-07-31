@@ -4,6 +4,8 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
+import java.util.Date;
+
 public class RegisterViewModel extends ViewModel {
     public MutableLiveData<String> fullName = new MutableLiveData<>();
     public MutableLiveData<String> username = new MutableLiveData<>();
@@ -11,6 +13,7 @@ public class RegisterViewModel extends ViewModel {
     public MutableLiveData<String> password = new MutableLiveData<>();
     public MutableLiveData<String> confirmPassword = new MutableLiveData<>();
     public MutableLiveData<String> phoneNumber = new MutableLiveData<>();
+    private final MutableLiveData<Date> dateLiveData = new MutableLiveData<>();
 
     public LiveData<String> getFullName() {
         return fullName;
@@ -58,5 +61,13 @@ public class RegisterViewModel extends ViewModel {
 
     public void setPhoneNumber(String phoneNumber) {
         this.phoneNumber.setValue(phoneNumber);
+    }
+
+    public LiveData<Date> getDate() {
+        return dateLiveData;
+    }
+
+    public void setDate(Date date) {
+        dateLiveData.setValue(date);
     }
 }

@@ -8,11 +8,6 @@
     android:layout_height="match_parent"
     android:background="@color/colorBackground">
 
-    <!-- EditText with Border Style -->
-
-
-    <!-- Button at the Bottom -->
-
     <TextView
         android:id="@+id/headerTextView"
         style="@style/HeaderTextStyle"

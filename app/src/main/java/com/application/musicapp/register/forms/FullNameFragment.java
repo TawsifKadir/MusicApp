@@ -133,7 +133,7 @@ public class FullNameFragment extends BaseFragment {
 
     @Override
     public void onNext() {
-        mListener.navigateToUserNameFragment();
+        mListener.navigateToDOBFragment();
     }
 
     @Override

@@ -34,7 +34,7 @@ public class UsernameFragment extends BaseFragment {
         // Inflate the layout for this fragment
         if (requireActivity() instanceof RegisterActivity) {
             RegisterActivity activity = (RegisterActivity) requireActivity();
-            activity.setToolbarTitle(1);
+            activity.setToolbarTitle(3);
         }
         return inflater.inflate(R.layout.fragment_username, container, false);
     }
