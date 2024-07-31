@@ -34,16 +34,12 @@ public class FireBaseHelper {
     }
 
     // Method to register a new user
-    public void registerUser(String fullName, String username, String email, String password, String confirmPassword, String phoneNumber, RegistrationCallback callback) {
-        if (fullName.isEmpty() || username.isEmpty() || email.isEmpty() || password.isEmpty() || confirmPassword.isEmpty() || phoneNumber.isEmpty()) {
+    public void registerUser(String fullName, String username, String email, String password,  String phoneNumber, RegistrationCallback callback) {
+        if (fullName.isEmpty() || username.isEmpty() || email.isEmpty() || password.isEmpty()  || phoneNumber.isEmpty()) {
             callback.onFailure("All fields are required");
             return;
         }
 
-        if (!password.equals(confirmPassword)) {
-            callback.onFailure("Passwords do not match");
-            return;
-        }
 
         mAuth.createUserWithEmailAndPassword(email, password)
                 .addOnCompleteListener(task -> {

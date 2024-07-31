@@ -25,12 +25,14 @@
     <dimen name="ss_app_version">18sp</dimen>
 
     <!-- Corner Radii -->
+    <dimen name="ccr_large">32dp</dimen>
     <dimen name="ccr_default">16dp</dimen>
     <dimen name="scr_input_box">4dp</dimen>
 
     <!-- Button Sizes and Padding -->
     <dimen name="button_padding">16dp</dimen>
     <dimen name="button_width">90%</dimen>
+    <dimen name="button_width_three_quarter">75pt</dimen>
     <dimen name="button_width_half">50%</dimen>
 
     <!-- Input Row Dimensions -->
@@ -40,6 +42,10 @@
     <dimen name="content_padding_small">4dp</dimen>
 
     <dimen name="margin_top">60dp</dimen>
+    <dimen name="margin_top_xl">90dp</dimen>
+    <dimen name="margin_top_xxl">120dp</dimen>
+    <dimen name="margin_top_xxxl">180dp</dimen>
+    <dimen name="margin_top_xxxxl">350dp</dimen>
 
     <dimen name="edit_text_height">48dp</dimen> <!-- Adjust this value as needed -->
 </resources>

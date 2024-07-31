@@ -97,10 +97,5 @@ public abstract class BaseFragment extends Fragment implements BaseInterface {
         }
     }
 
-    // Override this method in child fragments to provide the layout resource ID
-    protected abstract int getLayoutResourceId();
-
-    protected abstract void setupViews(View view);
-
 
 }

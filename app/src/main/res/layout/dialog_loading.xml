@@ -4,24 +4,9 @@
     android:layout_height="match_parent"
     android:padding="24dp">
 
-    <LinearLayout
+    <ProgressBar
+        android:id="@+id/progressBar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:gravity="center"
-        android:background="@drawable/dialog_background"
-        android:padding="24dp">
-
-        <ProgressBar
-            android:id="@+id/progressBar"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            style="?android:attr/progressBarStyleLarge" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Loading..."
-            android:layout_marginTop="16dp"/>
-    </LinearLayout>
+        style="?android:attr/progressBarStyleInverse" />
 </FrameLayout>
