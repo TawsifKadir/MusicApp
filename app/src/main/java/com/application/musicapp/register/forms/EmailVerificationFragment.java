@@ -1,20 +1,19 @@
 package com.application.musicapp.register.forms;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.os.Bundle;
 import android.os.CountDownTimer;
-import android.text.Editable;
-import android.text.TextWatcher;
-import android.util.Log;
+import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.application.musicapp.R;
@@ -22,35 +21,37 @@ import com.application.musicapp.basic.BaseFragment;
 import com.application.musicapp.register.RegisterActivity;
 import com.application.musicapp.register.RegisterViewModel;
 import com.application.musicapp.register.RegistrationFragmentChangeListener;
-import com.application.musicapp.utils.ValidationUtils;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 
 
-public class EmailFragment extends BaseFragment {
+public class EmailVerificationFragment extends BaseFragment {
 
     private RegisterViewModel viewModel;
     private RegistrationFragmentChangeListener mListener;
 
-    private TextInputLayout emailLayout;
-    private TextInputEditText email;
-    private Button btNext;
+    private TextView etEmail;
+    private TextView btResend;
+    private boolean timerRunning = false;
+    private CountDownTimer verificationTimer;
+    private CountDownTimer resendTimer;
 
+    private static final long RESEND_TIMEOUT = 60 * 2000; // 2 minute
 
-    public EmailFragment() {
+    public EmailVerificationFragment() {
         // Required empty public constructor
     }
     
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         if (requireActivity() instanceof RegisterActivity) {
             RegisterActivity activity = (RegisterActivity) requireActivity();
             activity.setToolbarTitle(5);
         }
-        return inflater.inflate(R.layout.fragment_email, container, false);
+        return inflater.inflate(R.layout.fragment_email_verification, container, false);
     }
 
     @Override
@@ -69,57 +70,51 @@ public class EmailFragment extends BaseFragment {
     @Override
     public void initViews() {
         View view = requireView();
-        emailLayout = view.findViewById(R.id.emailLayout);
-        email = view.findViewById(R.id.email);
-        btNext = view.findViewById(R.id.btNext);
+        btResend = view.findViewById(R.id.btResend);
+        etEmail = view.findViewById(R.id.etEmail);
     }
 
     @Override
     public void initObservers() {
-        viewModel.getEmail().observe(getViewLifecycleOwner(), new Observer<String>() {
-            @Override
-            public void onChanged(String s) {
-                email.setText(s);
+
+        viewModel.getEmail().observe(getViewLifecycleOwner(), email -> {
+            etEmail.setText(email);
+        });
+
+        startResendTimer();
+
+        btResend.setOnClickListener(v-> {
+            if (!timerRunning) {
+                mListener.resendEmailVerification();
+                startResendTimer();
             }
         });
 
-        btNext.setOnClickListener(v->{
 
-            String mail = email.getText().toString().trim();
+    }
 
-            if (mail.isEmpty()){
-                emailLayout.setError("Please enter your email");
-            }else if (!ValidationUtils.validateEmail(mail)){
-                emailLayout.setError("Please enter valid email");
-            }else {
-                viewModel.setEmail(mail);
-                mListener.registerUser();
-            }
-
-        });
-
-        email.addTextChangedListener(new TextWatcher() {
+    private void startResendTimer() {
+        disableResend();
+        timerRunning = true;
+        resendTimer = new CountDownTimer(RESEND_TIMEOUT, 1000) {
             @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
+            public void onTick(long millisUntilFinished) {
+                updateTimerText(millisUntilFinished);
+                mListener.verifyEmailAndCreateUser();
             }
 
             @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
+            public void onFinish() {
+                timerRunning = false;
+                enableResend();
             }
+        }.start();
+    }
 
-            @Override
-            public void afterTextChanged(Editable s) {
-                String mail = s.toString().trim();
-                if (mail.isEmpty()){
-                    emailLayout.setError(null);
-                }else if (ValidationUtils.validateEmail(mail)){
-                    emailLayout.setError(null);
-                }else {
-                    emailLayout.setError("Please enter valid email");
-                }
-            }
-        });
+    @SuppressLint("SetTextI18n")
+    private void updateTimerText(long millisUntilFinished) {
+        long secondsLeft = millisUntilFinished / 1000;
+        btResend.setText("Time left: " + secondsLeft);
     }
 
     @Override
@@ -140,8 +135,32 @@ public class EmailFragment extends BaseFragment {
     }
 
     @Override
+    public void onDestroyView() {
+        if (verificationTimer != null) {
+            verificationTimer.cancel();
+        }
+        if (resendTimer != null) {
+            resendTimer.cancel();
+        }
+        super.onDestroyView();
+    }
+
+    @SuppressLint("SetTextI18n")
+    private void enableResend(){
+        btResend.setEnabled(true);
+        btResend.setTextColor(getResources().getColor(R.color.colorAccent));
+        btResend.setText("Resend Code");
+    }
+
+    private void disableResend(){
+        // Set the TextView to the disabled style
+        btResend.setEnabled(false);
+        btResend.setTextColor(getResources().getColor(R.color.ash));
+    }
+
+    @Override
     public void onNext() {
-        mListener.navigateToEmailVerificationFragment();
+
     }
 
     @Override

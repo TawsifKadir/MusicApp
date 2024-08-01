@@ -2,6 +2,7 @@ package com.application.musicapp.register;
 
 import android.annotation.SuppressLint;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -17,15 +18,19 @@ import com.application.musicapp.R;
 import com.application.musicapp.basic.BaseActivity;
 import com.application.musicapp.register.forms.DOBFragment;
 import com.application.musicapp.register.forms.EmailFragment;
+import com.application.musicapp.register.forms.EmailVerificationFragment;
 import com.application.musicapp.register.forms.FullNameFragment;
 import com.application.musicapp.register.forms.PasswordFragment;
 import com.application.musicapp.register.forms.PhoneNumberFragment;
+import com.application.musicapp.register.forms.PhoneNumberVerificationFragment;
 import com.application.musicapp.register.forms.UsernameFragment;
 import com.application.musicapp.utils.FireBaseHelper;
 
+import java.util.Date;
+
 public class RegisterActivity extends BaseActivity implements RegistrationFragmentChangeListener{
 
-    private static final int NO_OF_PAGES = 5;
+    private static final int NO_OF_PAGES = 6;
 
     private RegisterViewModel viewModel;
     private FireBaseHelper fireBaseHelper;
@@ -34,12 +39,15 @@ public class RegisterActivity extends BaseActivity implements RegistrationFragme
     private String phoneNumber;
     private String email;
     private String fullName;
-    private String DOB;
+    private Date DOB;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
+
+        viewModel = new ViewModelProvider(this).get(RegisterViewModel.class);
+        fireBaseHelper = new FireBaseHelper();
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -52,11 +60,7 @@ public class RegisterActivity extends BaseActivity implements RegistrationFragme
 
         if (savedInstanceState == null) {
             navigateToFullNameFragment();
-            return;
         }
-
-        viewModel = new ViewModelProvider(this).get(RegisterViewModel.class);
-        fireBaseHelper = new FireBaseHelper();
     }
 
     private void loadFragment(Fragment fragment,Boolean addToBackStack) {
@@ -67,33 +71,6 @@ public class RegisterActivity extends BaseActivity implements RegistrationFragme
             fragmentTransaction.addToBackStack(null);
         }
         fragmentTransaction.commit();
-    }
-
-
-    @Override
-    public void registerUser() {
-        viewModel.getUsername().observe(this, uname -> username = uname);
-        viewModel.getPassword().observe(this, pass -> password = pass);
-        viewModel.getFullName().observe(this, fName -> fullName = fName);
-        viewModel.getEmail().observe(this, email_temp -> email = email_temp);
-        viewModel.getPhoneNumber().observe(this, phone_temp -> phoneNumber = phone_temp);
-
-        showLoadingDialog();
-        // Register user with Firebase
-        fireBaseHelper.registerUser(fullName, username, email, password,  phoneNumber, new FireBaseHelper.RegistrationCallback() {
-            @Override
-            public void onSuccess() {
-                hideLoadingDialog();
-                Toast.makeText(RegisterActivity.this, "Registration successful", Toast.LENGTH_SHORT).show();
-                // Navigate to next screen or update UI
-            }
-
-            @Override
-            public void onFailure(String errorMessage) {
-                hideLoadingDialog();
-                Toast.makeText(RegisterActivity.this, errorMessage, Toast.LENGTH_SHORT).show();
-            }
-        });
     }
 
     @Override
@@ -131,6 +108,95 @@ public class RegisterActivity extends BaseActivity implements RegistrationFragme
     }
 
     @Override
+    public void registerUser() {
+
+        if (viewModel == null) {
+            throw new IllegalStateException("ViewModel is not initialized");
+        }
+        viewModel.getFullName().observe(this, name -> {
+            Log.d("RegisterActivity", "Observed full name: " + name);
+            fullName = name;
+        });
+        viewModel.getPassword().observe(this, pass -> {
+            password = pass;
+        });
+        viewModel.getUsername().observe(this, uname -> {
+            username = uname;
+        });
+        viewModel.getEmail().observe(this, mail -> {
+            email = mail;
+        });
+        viewModel.getDate().observe(this, date -> {
+            DOB = date;
+        });
+        showLoadingDialog();
+        fireBaseHelper.registerUser(fullName, username, email, password, DOB, new FireBaseHelper.RegistrationCallback() {
+            @Override
+            public void onSuccess() {
+                hideLoadingDialog();
+                navigateToEmailVerificationFragment();
+            }
+
+            @Override
+            public void onFailure(String errorMessage) {
+                hideLoadingDialog();
+                Toast.makeText(RegisterActivity.this,errorMessage,Toast.LENGTH_SHORT).show();
+                deleteUser();
+            }
+        });
+    }
+
+    @Override
+    public void resendEmailVerification() {
+        fireBaseHelper.resendVerificationEmail(new FireBaseHelper.ResendCallback() {
+            @Override
+            public void onSuccess() {
+                Toast.makeText(RegisterActivity.this,"Verification link sent",Toast.LENGTH_LONG).show();
+            }
+
+            @Override
+            public void onFailure(String errorMessage) {
+
+            }
+        });
+    }
+
+    @Override
+    public void verifyEmailAndCreateUser() {
+        fireBaseHelper.checkEmailVerification(new FireBaseHelper.RegistrationCallback() {
+            @Override
+            public void onSuccess() {
+                navigateToPhoneNumberFragment();
+            }
+
+            @Override
+            public void onFailure(String errorMessage) {
+
+            }
+        });
+    }
+
+    @Override
+    public void addPhoneNumber() {
+
+    }
+
+    @Override
+    public void deleteUser() {
+        fireBaseHelper.deleteUser(new FireBaseHelper.DeleteUserCallback() {
+            @Override
+            public void onSuccess(String message) {
+                Toast.makeText(RegisterActivity.this,message,Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onFailure(String errorMessage) {
+                Toast.makeText(RegisterActivity.this,errorMessage,Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    @Override
     public void navigateToFullNameFragment() {
         loadFragment(new FullNameFragment(),false);
     }
@@ -146,6 +212,11 @@ public class RegisterActivity extends BaseActivity implements RegistrationFragme
     }
 
     @Override
+    public void navigateToEmailVerificationFragment() {
+        loadFragment(new EmailVerificationFragment(), true);
+    }
+
+    @Override
     public void navigateToUserNameFragment() {
         loadFragment(new UsernameFragment(),true);
     }
@@ -157,7 +228,12 @@ public class RegisterActivity extends BaseActivity implements RegistrationFragme
 
     @Override
     public void navigateToPhoneNumberFragment() {
-        loadFragment(new PhoneNumberFragment(),true);
+        loadFragment(new PhoneNumberFragment(),false);
+    }
+
+    @Override
+    public void navigateToPhoneNumberVerificationFragment() {
+        loadFragment(new PhoneNumberVerificationFragment(), true);
     }
 
     @Override

@@ -47,7 +47,11 @@
     <dimen name="margin_top_xxxl">180dp</dimen>
     <dimen name="margin_top_xxxxl">350dp</dimen>
 
+    <dimen name="image_height">300dp</dimen>
+
     <dimen name="text_layout_padding">80dp</dimen>
+
+    <dimen name="text_verify_padding">60dp</dimen>
 
     <dimen name="edit_text_height">48dp</dimen> <!-- Adjust this value as needed -->
 </resources>

@@ -1,5 +1,7 @@
 package com.application.musicapp.register;
 
+import android.util.Log;
+
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
@@ -20,6 +22,7 @@ public class RegisterViewModel extends ViewModel {
     }
 
     public void setFullName(String fullName) {
+        Log.d("RegisterViewModel", "Setting full name: " + fullName);
         this.fullName.setValue(fullName);
     }
 

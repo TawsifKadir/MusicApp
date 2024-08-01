@@ -21,6 +21,7 @@ import com.application.musicapp.basic.BaseFragment;
 import com.application.musicapp.register.RegisterActivity;
 import com.application.musicapp.register.RegisterViewModel;
 import com.application.musicapp.register.RegistrationFragmentChangeListener;
+import com.application.musicapp.utils.ValidationUtils;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 
@@ -102,8 +103,6 @@ public class PasswordFragment extends BaseFragment {
                 confirmPasswordLayout.setError("");
                 Log.d(TAG, "initObservers() called pass empty");
             }else if (!pass.equals(confirm)){
-                passwordLayout.setError("Passwords don't match");
-                confirmPasswordLayout.setError("");
                 Log.d(TAG, "initObservers() called pass don't match");
             }else {
                 viewModel.setPassword(pass);
@@ -120,13 +119,24 @@ public class PasswordFragment extends BaseFragment {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                passwordLayout.setError(null);
-                confirmPasswordLayout.setError(null);
             }
 
             @Override
             public void afterTextChanged(Editable s) {
+                String pass = s.toString().trim();
+                String confirmPass = confirmPassword.getText().toString().trim();
+                if (pass.isEmpty()){
+                    passwordLayout.setError(null);
+                }else if (!ValidationUtils.validatePassword(pass)){
+                    passwordLayout.setError("Password must have 6 characters");
+                    confirmPasswordLayout.setError(null);
+                }else {
+                    passwordLayout.setError(null);
+                }
 
+                if (!pass.equals(confirmPass) && !confirmPass.isEmpty()){
+                    confirmPasswordLayout.setError("Passwords do not match");
+                }
             }
         });
 
@@ -138,13 +148,19 @@ public class PasswordFragment extends BaseFragment {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                passwordLayout.setError(null);
-                confirmPasswordLayout.setError(null);
             }
 
             @Override
             public void afterTextChanged(Editable s) {
-
+                String pass = password.getText().toString().trim();
+                String confirmPass = s.toString().trim();
+                if (confirmPass.isEmpty()){
+                    confirmPasswordLayout.setError(null);
+                }else if (!pass.equals(confirmPass)){
+                    confirmPasswordLayout.setError("Passwords do not match");
+                }else {
+                    confirmPasswordLayout.setError(null);
+                }
             }
         });
 

@@ -55,6 +55,18 @@
         <item name="fontFamily">@font/roboto_medium</item>
     </style>
 
+    <style name="MyAnchorTimerTextStyle" parent="TextAppearance.MaterialComponents.Button">
+        <item name="android:textColor">@color/ash</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginTop">@dimen/content_padding_small</item>
+        <item name="android:layout_marginBottom">@dimen/content_padding_small</item>
+        <item name="android:textSize">@dimen/text_size_medium_1</item>
+        <item name="fontFamily">@font/roboto_medium</item>
+        <item name="android:textAlignment">center</item>
+    </style>
+
     <!-- Password EditText Style -->
     <style name="MyPasswordEditTextStyle" parent="Widget.MaterialComponents.TextInputLayout.FilledBox">
         <item name="boxBackgroundColor">@color/colorBackground</item>
@@ -79,6 +91,41 @@
         <item name="android:textStyle">bold</item>
         <item name="android:layout_marginBottom">@dimen/content_padding_small</item>
         <item name="android:layout_marginTop">@dimen/margin_top</item>
+    </style>
+
+    <style name="SubtitleTextStyle" parent="TextAppearance.AppCompat.Large">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textAlignment">center</item>
+        <item name="android:textSize">@dimen/text_size_large_3</item>
+        <item name="fontFamily">@font/roboto_bold</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:layout_marginBottom">@dimen/content_padding_small</item>
+        <item name="android:layout_marginTop">@dimen/margin_top</item>
+    </style>
+
+    <style name="HelperTextStyle" parent="TextAppearance.AppCompat.Large">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginStart">@dimen/text_verify_padding</item>
+        <item name="android:layout_marginEnd">@dimen/text_verify_padding</item>
+        <item name="android:layout_marginTop">@dimen/ss_app_title</item>
+        <item name="android:textAlignment">center</item>
+        <item name="android:textSize">@dimen/text_size_medium_2</item>
+        <item name="fontFamily">@font/roboto</item>
+        <item name="android:layout_marginBottom">@dimen/content_padding_small</item>
+    </style>
+
+    <style name="FocusTextStyle" parent="TextAppearance.AppCompat.Large">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginStart">@dimen/text_verify_padding</item>
+        <item name="android:layout_marginEnd">@dimen/text_verify_padding</item>
+        <item name="android:layout_marginTop">@dimen/ss_app_title</item>
+        <item name="android:textAlignment">center</item>
+        <item name="android:textSize">@dimen/text_size_medium_2</item>
+        <item name="fontFamily">@font/roboto_bold</item>
+        <item name="android:layout_marginBottom">@dimen/content_padding_small</item>
     </style>
 
     <style name="HeaderTextStyle" parent="TextAppearance.MaterialComponents.Headline6">
