@@ -33,7 +33,6 @@ public class EmailVerificationFragment extends BaseFragment {
     private TextView etEmail;
     private TextView btResend;
     private boolean timerRunning = false;
-    private CountDownTimer verificationTimer;
     private CountDownTimer resendTimer;
 
     private static final long RESEND_TIMEOUT = 60 * 2000; // 2 minute
@@ -136,13 +135,18 @@ public class EmailVerificationFragment extends BaseFragment {
 
     @Override
     public void onDestroyView() {
-        if (verificationTimer != null) {
-            verificationTimer.cancel();
-        }
         if (resendTimer != null) {
             resendTimer.cancel();
         }
         super.onDestroyView();
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        if (getActivity() != null){
+            mListener.deleteUser();
+        }
     }
 
     @SuppressLint("SetTextI18n")

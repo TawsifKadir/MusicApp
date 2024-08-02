@@ -3,17 +3,17 @@
     <style name="AppTheme" parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <!-- Primary brand color -->
         <item name="colorPrimary">@color/colorPrimary</item>
-        <item name="colorPrimaryVariant">@color/colorPrimaryVariant</item>
+        <item name="colorPrimaryVariant">@color/colorAccent</item>
         <item name="colorOnPrimary">@color/colorOnPrimary</item>
 
         <!-- Secondary brand color -->
-        <item name="colorSecondary">@color/colorSecondary</item>
-        <item name="colorSecondaryVariant">@color/colorSecondaryVariant</item>
-        <item name="colorOnSecondary">@color/colorOnSecondary</item>
+        <item name="colorSecondary">@color/editTextBorder</item>
+        <item name="colorSecondaryVariant">@color/buttonColor</item>
+        <item name="colorOnSecondary">@android:color/white</item>
 
         <!-- Background color -->
-        <item name="android:colorBackground">@color/appBackgroundColor</item>
-        <item name="colorOnBackground">@color/colorOnBackground</item>
+        <item name="android:colorBackground">@color/colorBackground</item>
+        <item name="colorOnBackground">@color/colorBackground</item>
 
         <!-- Surface color -->
         <item name="colorSurface">@color/colorSurface</item>
@@ -22,6 +22,11 @@
         <!-- Status bar color -->
         <item name="android:statusBarColor">@color/colorPrimaryDark</item>
         <item name="android:windowBackground">@color/windowBackground</item>
+
+        <!-- Text color -->
+        <item name="android:textColor">@android:color/black</item>
+        <item name="android:textColorPrimary">@android:color/black</item>
+        <item name="android:textColorSecondary">@color/ash</item>
 
         <!-- Font family -->
         <item name="android:fontFamily">@font/roboto</item>

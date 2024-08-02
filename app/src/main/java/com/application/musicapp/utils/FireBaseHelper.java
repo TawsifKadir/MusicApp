@@ -91,19 +91,20 @@ public class FireBaseHelper {
 
     public void checkEmailVerification(RegistrationCallback callback) {
         FirebaseUser user = getCurrentUser();
-
-        user.reload().addOnCompleteListener(reloadTask -> {
-            if (reloadTask.isSuccessful()) {
-                if (user.isEmailVerified()) {
-                    // Email is verified, now save user data
-                    saveUserData(user.getUid(), this.fullName,user.getDisplayName(), user.getEmail(), this.pendingDob, callback);
+        if (user != null){
+            user.reload().addOnCompleteListener(reloadTask -> {
+                if (reloadTask.isSuccessful()) {
+                    if (user.isEmailVerified()) {
+                        // Email is verified, now save user data
+                        saveUserData(user.getUid(), this.fullName,user.getDisplayName(), user.getEmail(), this.pendingDob, callback);
+                    } else {
+                        callback.onFailure("Email not verified yet.");
+                    }
                 } else {
-                    callback.onFailure("Email not verified yet.");
+                    callback.onFailure("Failed to reload user data: " + reloadTask.getException().getMessage());
                 }
-            } else {
-                callback.onFailure("Failed to reload user data: " + reloadTask.getException().getMessage());
-            }
-        });
+            });
+        }
     }
 
     public void resendVerificationEmail(final ResendCallback callback) {

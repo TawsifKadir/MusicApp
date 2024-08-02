@@ -22,6 +22,7 @@ import com.application.musicapp.basic.BaseFragment;
 import com.application.musicapp.register.RegisterActivity;
 import com.application.musicapp.register.RegisterViewModel;
 import com.application.musicapp.register.RegistrationFragmentChangeListener;
+import com.application.musicapp.utils.TestConfig;
 import com.application.musicapp.utils.ValidationUtils;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
@@ -93,6 +94,10 @@ public class EmailFragment extends BaseFragment {
                 emailLayout.setError("Please enter valid email");
             }else {
                 viewModel.setEmail(mail);
+                if (TestConfig.isTestEmail){
+                    mListener.navigateToPhoneNumberFragment();
+                    return;
+                }
                 mListener.registerUser();
             }
 

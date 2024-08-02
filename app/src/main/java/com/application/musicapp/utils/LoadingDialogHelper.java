@@ -2,6 +2,8 @@ package com.application.musicapp.utils;
 
 import android.app.Dialog;
 import android.content.Context;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.Window;
@@ -19,7 +21,6 @@ public class LoadingDialogHelper {
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.setContentView(view);
         dialog.setCancelable(false);
-
         WindowManager.LayoutParams params = dialog.getWindow().getAttributes();
         params.width = WindowManager.LayoutParams.MATCH_PARENT; // Or a specific size like 80% of the screen width
         dialog.getWindow().setAttributes(params);

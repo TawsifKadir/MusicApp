@@ -22,4 +22,9 @@
     <string name="sent_confirm_email">We sent a confirmation email to: </string>
     <string name="check_mail">Check your email and click on the confirmation link to continue</string>
     <string name="create_account">Create account</string>
+    <string name="cancel">Cancel</string>
+    <string name="ok">OK</string>
+    <string name="message">Message</string>
+    <string name="dialog_cancel_message">Are you sure you want to exit singup?</string>
+    <string name="dialog_message">You may lose access to the account you have begun creating.</string>
 </resources>

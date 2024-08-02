@@ -1,7 +1,34 @@
-<resources xmlns:tools="http://schemas.android.com/tools">
-    <!-- Base application theme. -->
-    <style name="Base.Theme.MusicApp" parent="Theme.Material3.DayNight.NoActionBar">
-        <!-- Customize your dark theme here. -->
-        <!-- <item name="colorPrimary">@color/my_dark_primary</item> -->
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="AppTheme" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+        <!-- Primary brand color -->
+        <item name="colorPrimary">@color/colorPrimaryNight</item>
+        <item name="colorPrimaryVariant">@android:color/white</item>
+        <item name="colorOnPrimary">@color/colorOnPrimaryNight</item>
+
+        <!-- Secondary brand color -->
+        <item name="colorSecondary">@color/windowBackground</item>
+        <item name="colorSecondaryVariant">@android:color/white</item>
+        <item name="colorOnSecondary">@android:color/black</item>
+
+        <!-- Background color -->
+        <item name="android:colorBackground">@color/appBackgroundColorNight</item>
+        <item name="colorOnBackground">@color/colorOnBackgroundNight</item>
+
+        <!-- Surface color -->
+        <item name="colorSurface">@color/colorSurfaceNight</item>
+        <item name="colorOnSurface">@color/colorOnSurfaceNight</item>
+
+        <!-- Status bar color -->
+        <item name="android:statusBarColor">@color/colorPrimaryDarkNight</item>
+        <item name="android:windowBackground">@color/windowBackgroundNight</item>
+
+        <!-- Font family -->
+        <item name="android:fontFamily">@font/roboto</item>
+
+        <!-- Text colors -->
+        <item name="android:textColor">@android:color/white</item>
+        <item name="android:textColorPrimary">@android:color/white</item>
+        <item name="android:textColorSecondary">@color/textSecondaryColorNight</item>
     </style>
 </resources>

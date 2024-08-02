@@ -6,7 +6,7 @@
     android:id="@+id/linearLayout2"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorBackground">
+    android:background="?attr/colorOnBackground">
 
     <TextView
         android:id="@+id/headerTextView"
@@ -17,6 +17,7 @@
         android:layout_marginTop="232dp"
         android:layout_marginEnd="8dp"
         android:text="@string/enter_full_name"
+        android:textColor="?android:attr/textColor"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />

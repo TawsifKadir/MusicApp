@@ -24,7 +24,9 @@ import com.application.musicapp.register.forms.PasswordFragment;
 import com.application.musicapp.register.forms.PhoneNumberFragment;
 import com.application.musicapp.register.forms.PhoneNumberVerificationFragment;
 import com.application.musicapp.register.forms.UsernameFragment;
+import com.application.musicapp.utils.DialogUtils;
 import com.application.musicapp.utils.FireBaseHelper;
+import com.application.musicapp.utils.GenericDialog;
 
 import java.util.Date;
 
@@ -40,6 +42,7 @@ public class RegisterActivity extends BaseActivity implements RegistrationFragme
     private String email;
     private String fullName;
     private Date DOB;
+    private DialogUtils dialogUtils;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,6 +51,7 @@ public class RegisterActivity extends BaseActivity implements RegistrationFragme
 
         viewModel = new ViewModelProvider(this).get(RegisterViewModel.class);
         fireBaseHelper = new FireBaseHelper();
+        dialogUtils = new DialogUtils(this);
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -91,8 +95,17 @@ public class RegisterActivity extends BaseActivity implements RegistrationFragme
     @Override
     public void onBackPressed() {
         FragmentManager fragmentManager = getSupportFragmentManager();
+        Fragment fragment = fragmentManager.findFragmentById(R.id.fragment_container);
 
-        if (fragmentManager.getBackStackEntryCount() > 0) {
+        if (fragment instanceof EmailVerificationFragment){
+            dialogUtils.showDialog(getString(R.string.dialog_cancel_message), getString(R.string.dialog_message), new GenericDialog.DialogCallback() {
+                @Override
+                public void onOkClicked() {
+                    deleteUser();
+                    finish();
+                }
+            });
+        }else if (fragmentManager.getBackStackEntryCount() > 0) {
             // Pop the back stack entry
             fragmentManager.popBackStack();
 

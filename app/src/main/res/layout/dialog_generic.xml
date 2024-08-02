@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/dialog_height"
+    android:orientation="vertical"
+    android:padding="@dimen/ccr_large"
+    android:background="@drawable/dialog_background">
+
+    <TextView
+        android:id="@+id/dialogMessage"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/ccr_default"
+        android:text="@string/message"
+        android:textSize="18sp"
+        android:fontFamily="@font/roboto_bold"
+        android:gravity="center"
+        android:textColor="@android:color/black"/>
+
+    <TextView
+        android:id="@+id/subtitleMessage"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/ccr_default"
+        android:text="@string/message"
+        android:textSize="18sp"
+        android:fontFamily="@font/roboto"
+        android:gravity="center"
+        android:textColor="@android:color/black"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:gravity="center">
+
+        <Button
+            android:id="@+id/dialogOkButton"
+            style="@style/OkButtonStyle"
+            android:text="@string/ok"
+            android:textAllCaps="false"/>
+
+        <Button
+            android:id="@+id/dialogCancelButton"
+            style="@style/CancelButtonStyle"
+            android:text="@string/cancel"
+            android:textAllCaps="false"/>
+
+    </LinearLayout>
+</LinearLayout>
