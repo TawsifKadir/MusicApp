@@ -1,10 +1,15 @@
 package com.application.musicapp.register;
 
+import com.google.firebase.auth.PhoneAuthCredential;
+import com.google.firebase.auth.PhoneAuthProvider;
+
 public interface RegistrationFragmentChangeListener {
     void registerUser();
     void resendEmailVerification();
     void verifyEmailAndCreateUser();
-    void addPhoneNumber();
+    void verifyPhoneNumber(String phoneNumber);
+    void resendOTP();
+    void updatePhoneNumber(PhoneAuthCredential credential);
     void deleteUser();
     void navigateToFullNameFragment();
     void navigateToDOBFragment();
@@ -14,4 +19,5 @@ public interface RegistrationFragmentChangeListener {
     void navigateToPasswordFragment();
     void navigateToPhoneNumberFragment();
     void navigateToPhoneNumberVerificationFragment();
+    String getVerificationId();
 }

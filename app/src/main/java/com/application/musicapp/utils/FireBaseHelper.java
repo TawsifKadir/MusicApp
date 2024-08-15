@@ -4,6 +4,8 @@ import android.app.Activity;
 import android.os.Handler;
 import android.os.Looper;
 
+import androidx.annotation.NonNull;
+
 import com.google.firebase.FirebaseException;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -25,6 +27,7 @@ public class FireBaseHelper {
     private FirebaseFirestore firestore;
     private Date pendingDob;
     private String fullName;
+
 
     public FireBaseHelper() {
         mAuth = FirebaseAuth.getInstance();
@@ -119,6 +122,17 @@ public class FireBaseHelper {
                 });
     }
 
+    public void resetPassword(String email, AuthCallback callback) {
+        mAuth.sendPasswordResetEmail(email)
+                .addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
+                        callback.onSuccess(null); // Password reset email sent
+                    } else {
+                        callback.onFailure(task.getException());
+                    }
+                });
+    }
+
     // Method to update user profile and save user data
     private void updateUserProfile(FirebaseUser user, String fullName, String username, Date DOB,RegistrationCallback callback) {
         UserProfileChangeRequest profileUpdates = new UserProfileChangeRequest.Builder()
@@ -149,7 +163,7 @@ public class FireBaseHelper {
     }
 
     // Method to verify phone number
-    public void verifyPhoneNumber(String phoneNumber, PhoneAuthCallback callback, Activity activity) {
+    public void verifyPhoneNumber(String phoneNumber, Activity activity, PhoneAuthCallback callback) {
         PhoneAuthOptions options = PhoneAuthOptions.newBuilder(mAuth)
                 .setPhoneNumber(phoneNumber)
                 .setTimeout(60L, TimeUnit.SECONDS)
@@ -173,6 +187,37 @@ public class FireBaseHelper {
                 })
                 .build();
         PhoneAuthProvider.verifyPhoneNumber(options);
+    }
+
+    public void resendOTP(String phoneNumber, PhoneAuthProvider.ForceResendingToken resendToken, Activity activity, PhoneAuthCallback callback) {
+        if (resendToken != null) {
+            PhoneAuthOptions options = PhoneAuthOptions.newBuilder(mAuth)
+                    .setPhoneNumber(phoneNumber)              // Phone number to verify
+                    .setTimeout(60L, TimeUnit.SECONDS)         // Timeout duration
+                    .setActivity(activity)                        // Activity (for callback binding)
+                    .setCallbacks(new PhoneAuthProvider.OnVerificationStateChangedCallbacks() {
+                        @Override
+                        public void onVerificationCompleted(@NonNull PhoneAuthCredential credential) {
+                            callback.onVerificationCompleted(credential);
+                        }
+
+                        @Override
+                        public void onVerificationFailed(@NonNull FirebaseException e) {
+                            callback.onVerificationFailed(e);
+                        }
+
+                        @Override
+                        public void onCodeSent(@NonNull String verificationId, @NonNull PhoneAuthProvider.ForceResendingToken token) {
+                            // Update verificationId and resendToken
+                            callback.onCodeSent(verificationId, token);
+                        }
+                    })
+                    .setForceResendingToken(resendToken)       // Pass the saved resendToken
+                    .build();
+            PhoneAuthProvider.verifyPhoneNumber(options);
+        } else {
+            callback.onFailure("Resend token is null");
+        }
     }
 
     // Method to update phone number
@@ -253,6 +298,7 @@ public class FireBaseHelper {
         void onVerificationCompleted(PhoneAuthCredential credential);
         void onVerificationFailed(FirebaseException e);
         void onCodeSent(String verificationId, PhoneAuthProvider.ForceResendingToken token);
+        void onFailure(String errorMessage);
     }
 
     // Callback interface for deleting user account

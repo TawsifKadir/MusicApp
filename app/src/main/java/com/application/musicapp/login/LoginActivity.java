@@ -12,6 +12,7 @@ import com.application.musicapp.MainActivity;
 import com.application.musicapp.R;
 import com.application.musicapp.basic.BaseActivity;
 import com.application.musicapp.register.RegisterActivity;
+import com.application.musicapp.resetPass.ResetPassActivity;
 import com.application.musicapp.utils.DialogUtils;
 import com.application.musicapp.utils.FireBaseHelper;
 import com.application.musicapp.utils.GenericDialog;
@@ -95,7 +96,7 @@ public class LoginActivity extends BaseActivity {
         });
 
         btResetPass.setOnClickListener(v->{
-
+            navigateToResetPasswordActivity();
         });
     }
 
@@ -115,25 +116,42 @@ public class LoginActivity extends BaseActivity {
         navigateToMainActivity();
     }
 
-    public void authenticate(String email,String password){
-        if (email.isEmpty() || password.isEmpty()){
-            Toast.makeText(LoginActivity.this, "Please enter email and password", Toast.LENGTH_SHORT).show();
+    public void authenticate(String credentials,String password){
+        if (credentials.isEmpty() || password.isEmpty()){
+            if (isEmail)
+                Toast.makeText(LoginActivity.this, "Please enter email and password", Toast.LENGTH_SHORT).show();
+            else
+                Toast.makeText(LoginActivity.this, "Please enter phone number and password", Toast.LENGTH_SHORT).show();
         }else{
-            showLoadingDialog();
-            fireBaseHelper.signIn(email, password, new FireBaseHelper.AuthCallback() {
-                @Override
-                public void onSuccess(FirebaseUser user) {
-                    prefHelper.saveUser(user.getDisplayName(), true);
-                    hideLoadingDialog();
-                    onNext();
-                }
-                @Override
-                public void onFailure(Exception e) {
-                    hideLoadingDialog();
-                    Toast.makeText(LoginActivity.this, e.getMessage(), Toast.LENGTH_SHORT).show();
-                }
-            });
+            if (isEmail){
+                signInWithEmail(credentials,password);
+            }else {
+                signInWithPhoneNumber(credentials, password);
+            }
         }
+    }
+
+    private void signInWithEmail(String credentials, String password){
+
+        showLoadingDialog();
+
+        fireBaseHelper.signIn(credentials, password, new FireBaseHelper.AuthCallback() {
+            @Override
+            public void onSuccess(FirebaseUser user) {
+                prefHelper.saveUser(user.getDisplayName(), true);
+                hideLoadingDialog();
+                onNext();
+            }
+            @Override
+            public void onFailure(Exception e) {
+                hideLoadingDialog();
+                Toast.makeText(LoginActivity.this, e.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    private void signInWithPhoneNumber(String credentials, String password){
+        showToast("Still work in progress");
     }
 
     private void navigateToMainActivity(){
@@ -142,6 +160,10 @@ public class LoginActivity extends BaseActivity {
 
     private void navigateToRegisterActivity(){
         navigateToActivity(RegisterActivity.class);
+    }
+
+    private void navigateToResetPasswordActivity(){
+        navigateToActivity(ResetPassActivity.class);
     }
 
     private void clearUi(){

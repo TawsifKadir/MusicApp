@@ -56,4 +56,7 @@
     <dimen name="text_verify_padding">60dp</dimen>
 
     <dimen name="edit_text_height">48dp</dimen> <!-- Adjust this value as needed -->
+
+    <dimen name="auto_text_height">56dp</dimen>
+    <dimen name="auto_text_width">72dp</dimen>
 </resources>

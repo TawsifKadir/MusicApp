@@ -1,5 +1,7 @@
 package com.application.musicapp.utils;
 
+import android.util.Patterns;
+
 public class ValidationUtils {
     public static boolean validateEmail(String email) {
         if (email == null || email.trim().isEmpty()) {
@@ -22,5 +24,14 @@ public class ValidationUtils {
             return false;
         }
         return true; // No error
+    }
+
+    public static boolean validatePhoneNumber(String phoneNumber) {
+        if (phoneNumber == null || phoneNumber.isEmpty()) {
+            return false;
+        }
+
+        // Basic validation: Check if it matches a phone number pattern
+        return Patterns.PHONE.matcher(phoneNumber).matches();
     }
 }

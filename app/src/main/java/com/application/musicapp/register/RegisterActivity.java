@@ -7,7 +7,6 @@ import android.view.MenuItem;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
@@ -27,10 +26,15 @@ import com.application.musicapp.register.forms.UsernameFragment;
 import com.application.musicapp.utils.DialogUtils;
 import com.application.musicapp.utils.FireBaseHelper;
 import com.application.musicapp.utils.GenericDialog;
+import com.google.firebase.FirebaseException;
+import com.google.firebase.auth.PhoneAuthCredential;
+import com.google.firebase.auth.PhoneAuthProvider;
 
 import java.util.Date;
 
 public class RegisterActivity extends BaseActivity implements RegistrationFragmentChangeListener{
+
+    private static final String TAG = "RegisterActivity";
 
     private static final int NO_OF_PAGES = 6;
 
@@ -38,11 +42,13 @@ public class RegisterActivity extends BaseActivity implements RegistrationFragme
     private FireBaseHelper fireBaseHelper;
     private String username;
     private String password;
-    private String phoneNumber;
+    private String phone;
     private String email;
     private String fullName;
     private Date DOB;
     private DialogUtils dialogUtils;
+    private String verifyId;
+    private PhoneAuthProvider.ForceResendingToken rsToken;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -105,7 +111,14 @@ public class RegisterActivity extends BaseActivity implements RegistrationFragme
                     finish();
                 }
             });
-        }else if (fragmentManager.getBackStackEntryCount() > 0) {
+        }else if (fragment instanceof PhoneNumberVerificationFragment){
+            dialogUtils.showDialog(getString(R.string.dialog_cancel_message), getString(R.string.dialog_phone_message), new GenericDialog.DialogCallback() {
+                @Override
+                public void onOkClicked() {
+                    finish();
+                }
+            });
+        } else if (fragmentManager.getBackStackEntryCount() > 0) {
             // Pop the back stack entry
             fragmentManager.popBackStack();
 
@@ -179,6 +192,7 @@ public class RegisterActivity extends BaseActivity implements RegistrationFragme
         fireBaseHelper.checkEmailVerification(new FireBaseHelper.RegistrationCallback() {
             @Override
             public void onSuccess() {
+                viewModel.setIsAccountCreated(true);
                 navigateToPhoneNumberFragment();
             }
 
@@ -190,8 +204,90 @@ public class RegisterActivity extends BaseActivity implements RegistrationFragme
     }
 
     @Override
-    public void addPhoneNumber() {
+    public void verifyPhoneNumber(String phoneNumber) {
+        Log.d(TAG, "verifyPhoneNumber() called with: phoneNumber = [" + phoneNumber + "]");
 
+        showLoadingDialog();
+
+        fireBaseHelper.verifyPhoneNumber(phoneNumber, RegisterActivity.this, new FireBaseHelper.PhoneAuthCallback() {
+            @Override
+            public void onVerificationCompleted(PhoneAuthCredential credential) {
+                updatePhoneNumber(credential);
+                hideLoadingDialog();
+            }
+
+            @Override
+            public void onVerificationFailed(FirebaseException e) {
+                hideLoadingDialog();
+                showToast(e.getMessage());
+            }
+
+            @Override
+            public void onCodeSent(String verificationId, PhoneAuthProvider.ForceResendingToken token) {
+                Log.d(TAG, "onCodeSent() called with: verificationId = [" + verificationId + "], token = [" + token + "]");
+                phone = phoneNumber;
+                verifyId = verificationId;
+                rsToken = token;
+                hideLoadingDialog();
+                navigateToPhoneNumberVerificationFragment();
+            }
+
+            @Override
+            public void onFailure(String errorMessage) {
+                hideLoadingDialog();
+                showToast(errorMessage);
+            }
+        });
+    }
+
+    @Override
+    public void resendOTP() {
+
+        showLoadingDialog();
+
+        fireBaseHelper.resendOTP(phone, rsToken, RegisterActivity.this, new FireBaseHelper.PhoneAuthCallback() {
+            @Override
+            public void onVerificationCompleted(PhoneAuthCredential credential) {
+                updatePhoneNumber(credential);
+                hideLoadingDialog();
+            }
+
+            @Override
+            public void onVerificationFailed(FirebaseException e) {
+                hideLoadingDialog();
+                showToast(e.getMessage());
+            }
+
+            @Override
+            public void onCodeSent(String verificationId, PhoneAuthProvider.ForceResendingToken token) {
+                Log.d(TAG, "onCodeSent() called with: verificationId = [" + verificationId + "], token = [" + token + "]");
+                verifyId = verificationId;
+                rsToken = token;
+                hideLoadingDialog();
+            }
+
+            @Override
+            public void onFailure(String errorMessage) {
+                hideLoadingDialog();
+                showToast(errorMessage);
+            }
+        });
+    }
+
+    @Override
+    public void updatePhoneNumber(PhoneAuthCredential credential) {
+        fireBaseHelper.updatePhoneNumber(credential, new FireBaseHelper.VerificationCallback() {
+            @Override
+            public void onSuccess() {
+                showToast("Phone number has been added");
+                finish();
+            }
+
+            @Override
+            public void onFailure(String errorMessage) {
+
+            }
+        });
     }
 
     @Override
@@ -247,6 +343,11 @@ public class RegisterActivity extends BaseActivity implements RegistrationFragme
     @Override
     public void navigateToPhoneNumberVerificationFragment() {
         loadFragment(new PhoneNumberVerificationFragment(), true);
+    }
+
+    @Override
+    public String getVerificationId() {
+        return verifyId;
     }
 
     @Override

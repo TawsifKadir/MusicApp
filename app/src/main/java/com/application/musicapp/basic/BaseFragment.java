@@ -9,6 +9,8 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.EditText;
 
 import androidx.annotation.NonNull;
@@ -97,5 +99,19 @@ public abstract class BaseFragment extends Fragment implements BaseInterface {
         }
     }
 
+    protected void bindAutoCompleteTextView(AutoCompleteTextView autoCompleteTextView, String[] array) {
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(requireContext(),
+                android.R.layout.simple_dropdown_item_1line, array);
+        autoCompleteTextView.setAdapter(adapter);
+        autoCompleteTextView.setText(adapter.getItem(0), false);
+
+        autoCompleteTextView.setOnClickListener(v -> autoCompleteTextView.showDropDown());
+
+        autoCompleteTextView.setOnFocusChangeListener((v, hasFocus) -> {
+            if (hasFocus) {
+                autoCompleteTextView.showDropDown();
+            }
+        });
+    }
 
 }

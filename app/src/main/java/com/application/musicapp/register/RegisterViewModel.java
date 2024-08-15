@@ -9,13 +9,15 @@ import androidx.lifecycle.ViewModel;
 import java.util.Date;
 
 public class RegisterViewModel extends ViewModel {
-    public MutableLiveData<String> fullName = new MutableLiveData<>();
-    public MutableLiveData<String> username = new MutableLiveData<>();
-    public MutableLiveData<String> email = new MutableLiveData<>();
-    public MutableLiveData<String> password = new MutableLiveData<>();
-    public MutableLiveData<String> confirmPassword = new MutableLiveData<>();
-    public MutableLiveData<String> phoneNumber = new MutableLiveData<>();
+    private final MutableLiveData<String> fullName = new MutableLiveData<>();
+    private final MutableLiveData<String> username = new MutableLiveData<>();
+    private final MutableLiveData<String> email = new MutableLiveData<>();
+    private final MutableLiveData<String> password = new MutableLiveData<>();
+    private final MutableLiveData<String> confirmPassword = new MutableLiveData<>();
+    private final MutableLiveData<String> phoneNumber = new MutableLiveData<>();
     private final MutableLiveData<Date> dateLiveData = new MutableLiveData<>();
+    private final MutableLiveData<Boolean> isAccountCreated = new MutableLiveData<>(false);
+    private final MutableLiveData<String> countryCode = new MutableLiveData<>();
 
     public LiveData<String> getFullName() {
         return fullName;
@@ -72,5 +74,21 @@ public class RegisterViewModel extends ViewModel {
 
     public void setDate(Date date) {
         dateLiveData.setValue(date);
+    }
+
+    public LiveData<Boolean> getIsAccountCreated(){
+        return isAccountCreated;
+    }
+
+    public void setIsAccountCreated(Boolean isAccountCreated){
+        this.isAccountCreated.setValue(isAccountCreated);
+    }
+
+    public void setCountryCode(String countryCode){
+        this.countryCode.setValue(countryCode);
+    }
+
+    public LiveData<String> getCountryCode(){
+        return countryCode;
     }
 }

@@ -6,6 +6,8 @@ import android.os.Bundle;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.EditText;
 import android.widget.Toast;
 
@@ -41,7 +43,7 @@ public abstract class BaseActivity extends AppCompatActivity implements BaseInte
 
     @Override
     public void showToast(String message) {
-        Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, message, Toast.LENGTH_LONG).show();
     }
 
     @Override
@@ -78,5 +80,18 @@ public abstract class BaseActivity extends AppCompatActivity implements BaseInte
         }
     }
 
+    protected void bindAutoCompleteTextView(AutoCompleteTextView autoCompleteTextView, String[] array) {
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(this,
+                android.R.layout.simple_dropdown_item_1line, array);
+        autoCompleteTextView.setAdapter(adapter);
+        autoCompleteTextView.setText(adapter.getItem(0), false);
 
+        autoCompleteTextView.setOnClickListener(v -> autoCompleteTextView.showDropDown());
+
+        autoCompleteTextView.setOnFocusChangeListener((v, hasFocus) -> {
+            if (hasFocus) {
+                autoCompleteTextView.showDropDown();
+            }
+        });
+    }
 }

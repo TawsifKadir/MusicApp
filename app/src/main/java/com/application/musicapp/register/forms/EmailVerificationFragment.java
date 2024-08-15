@@ -145,7 +145,10 @@ public class EmailVerificationFragment extends BaseFragment {
     public void onDestroy() {
         super.onDestroy();
         if (getActivity() != null){
-            mListener.deleteUser();
+            boolean isAccountCreated = Boolean.TRUE.equals(viewModel.getIsAccountCreated().getValue());
+            if (!isAccountCreated) {
+                mListener.deleteUser();
+            }
         }
     }
 
